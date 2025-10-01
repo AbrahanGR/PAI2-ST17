@@ -13,8 +13,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     conn, addr = s.accept()
     with conn:
         print(f"Connected by {addr}")
+        buffer = ''
         while True:
-            data = conn.recv(1024).decode()
+            data = conn.recv(1024)
+            buffer += data.decode()
+            while "\n" in buffer:
+                mensaje, buffer = buffer.split("\n", 1)
+                print("Recibido: " + mensaje)
+            '''
             if "," in data:
                 datos = data.split(',')
                 print(f"recibido: {datos[0]}")
@@ -29,6 +35,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 else:
                     print("El mensaje es FALSO")
 
+            '''
             if not data:
                 break
             conn.sendall(data.encode())
