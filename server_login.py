@@ -8,7 +8,8 @@ def store_new_user(usuario, contraseña, connection):
 
 def login_user(usuario_check, contraseña_check, connection):
     cursor = connection.cursor()
-    contraseña_salt = cursor.execute("SELECT password FROM users WHERE username = %s", (usuario_check,))
+    cursor.execute("SELECT password FROM users WHERE username = %s", (usuario_check,))
+    contraseña_salt = cursor.fetchone()[0]
     if contraseña_salt is None:
         print ("No se ha encontrado usuario")
         return False
