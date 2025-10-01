@@ -1,5 +1,12 @@
+import hashlib
+import os
+import random
+
 import psycopg2
 from psycopg2 import sql
+
+import hashing
+import server_login
 
 #Conexión con el usuario administrador para crear las tablas y darle permiso al usuario servidor
 connection = psycopg2.connect(
@@ -19,11 +26,16 @@ cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA pub
 
 cursor.execute(sql.SQL("GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO {};").format(sql.Identifier("server")))
 
+cursor.execute("DROP TABLE IF EXISTS users")
 cursor.execute("CREATE TABLE users (username VARCHAR(255) PRIMARY KEY, password VARCHAR(128))")
-cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", ('pepe', 'prueba'))
-cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", ('pepa', 'prueba2'))
 
-cursor.execute("CREATE TABLE transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, PRIMARY KEY (origin, dst))")
+#Introducir usuarios prerregistrados
+hash1 = hashing.hash_password("P3p3*sEgUrO*1nd3sc1fr4bl3")
+hash2 = hashing.hash_password("PEpA_s3gur4_IndEscIfRAblE")
+server_login.store_new_user("pepe", hash1, connection)
+server_login.store_new_user("pepa", hash2, connection)
+
+cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, PRIMARY KEY (origin, dst))")
 
 cursor.close()
 connection.close()

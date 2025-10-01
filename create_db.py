@@ -9,8 +9,9 @@ from psycopg2 import sql
 # Y el otro usuario para manejar la base de datos que solo tenga acceso a leer y escribir, asi si un atacante obtiene acceso al servidor no podrá hacer modificaciones a la estructura de la db
 # Hecho en un script de python para manejejar desde python y no sea necesario usar archivos .sql o algun cliente de Postgres
 # Al ejecutar este script se tendrá la base de datos completamente preparada para usarse
-# En la práctica este script solo se usará una vez al principio y debe quedar fuera de alcance para evitar que atacantes usen este script con fines maliciosos, ya que contiene operaciones con el superusuario postrgres
+# En la práctica los usuarios aquí y en el resto de operaciones deben  estar fuera del script para que en caso de filtracion de codigo fuente no se filtren las contraseñas y cualquiera pueda acceder a la base de datos
 # Este script solo está hecho por comodidad para la PAI pero no sería el modo más "seguro" de crear la base de datos
+# Una buena práctica sería poner las contraseñas en variables del sistema por ejemplo y llamarlas con el paquete "os" de python.
 connection = psycopg2.connect(
     host="localhost",
     port=5432,
