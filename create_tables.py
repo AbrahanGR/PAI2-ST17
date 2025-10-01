@@ -20,12 +20,6 @@ connection = psycopg2.connect(
 connection.autocommit = True
 cursor = connection.cursor()
 
-#Le damos permisos de lectura, escritura y edición de los datos
-
-cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO {};").format(sql.Identifier("server")))
-
-cursor.execute(sql.SQL("GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO {};").format(sql.Identifier("server")))
-
 cursor.execute("DROP TABLE IF EXISTS users")
 cursor.execute("CREATE TABLE users (username VARCHAR(255) PRIMARY KEY, password VARCHAR(128))")
 
@@ -36,6 +30,11 @@ server_login.store_new_user("pepe", hash1, connection)
 server_login.store_new_user("pepa", hash2, connection)
 
 cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, PRIMARY KEY (origin, dst))")
+
+#Le damos permisos de lectura, escritura y edición de los datos sobre las tablas
+cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO {};").format(sql.Identifier("server")))
+
+cursor.execute(sql.SQL("GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO {};").format(sql.Identifier("server")))
 
 cursor.close()
 connection.close()

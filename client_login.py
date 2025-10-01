@@ -1,2 +1,7 @@
 import hashing
-#Poner aqui los metodos necesarios para hacer login en cliente
+from hashing import contraseña
+
+def credentials():
+    usuario = input("Introduzca su usuario: ")
+    contraseña = input("Introduzcas su contraseña: ")
+    return usuario + "," + contraseña
