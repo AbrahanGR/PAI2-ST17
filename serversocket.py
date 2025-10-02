@@ -26,6 +26,22 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print(f"Connected by {addr}")
         while True: #Bucle de inicio de sesión
             data = conn.recv(1024).decode()
+            '''
+            if "," in data:
+                datos = data.split(',')
+                print(f"recibido: {datos[0]}")
+                print(f"recibido: {datos[1]}")
+
+                cifrado = datos[0]
+                mensaje = datos[1].encode()
+                comprobante = hmac.new(b"clave secreta secretisima", mensaje, hashlib.sha256).hexdigest()
+
+                if hmac.compare_digest(cifrado, comprobante):
+                    print("El mensaje es AUTENTICO")
+                else:
+                    print("El mensaje es FALSO")
+
+            '''
             if data == "0":
                 break
             elif "," in data:
