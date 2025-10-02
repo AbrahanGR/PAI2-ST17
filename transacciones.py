@@ -31,12 +31,12 @@ def comprueba_credenciales(emisor, receptor, cantidad):
         print("El usuario receptor no existe")
         res = False
     
-    if cantidad<="0":
+    if cantidad<=0:
         res = False
 
     res = True
     cursor.close()
-    pass
+    return res
 
 def realiza_transaccion(emisor, receptor, cantidad):
     CONNECTION = psycopg2.connect(

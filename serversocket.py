@@ -71,11 +71,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 
                                 emisor = datos[1]
                                 receptor = datos[2]
-                                cantidad = datos[3]
+                                cantidad = float(datos[3])
 
                                 if transacciones.comprueba_credenciales(emisor, receptor, cantidad):
                                     transacciones.realiza_transaccion(emisor, receptor, cantidad)
-                                
+                                else:
+                                    data_server = "transaccion fallida"                                
 
                             print(data_server)
                             conn.send(data_server.encode())
