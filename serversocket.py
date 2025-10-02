@@ -7,6 +7,7 @@ import hashlib
 import psycopg2
 
 import server_login
+import transacciones
 
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
 PORT = 3030  # Port to listen on (non-privileged ports are > 1023)
@@ -67,13 +68,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             elif "," in data:
                                 datos = data.split(',')
                                 #"TODO: Implementar transacciones para usuarios"
-                                buffer = ''
-                                while True:
-                                    data = conn.recv(1024)
-                                    buffer += data.decode()
-                                    while "\n" in buffer:
-                                        mensaje, buffer = buffer.split("\n", 1)
-                                        print("Recibido: " + mensaje)
+                                
+                                emisor = datos[1]
+                                receptor = datos[2]
+                                cantidad = datos[3]
+
+                                if transacciones.comprueba_credenciales(emisor, receptor, cantidad):
+                                    transacciones.realiza_transaccion(emisor, receptor, cantidad)
+                                
+
                             print(data_server)
                             conn.send(data_server.encode())
                     else:

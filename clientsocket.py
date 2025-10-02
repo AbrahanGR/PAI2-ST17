@@ -37,15 +37,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
                 if input_user == "1":
                     "TODO: Implementar transacciones para usuarios"
-                    #primero habria que iniciar sesion
 
                     datos_transaccion = transacciones.crea_transaccion()
-                    emisor = datos_transaccion[0] + '\n'
-                    receptor = datos_transaccion[1] + '\n'
-                    cantidad = datos_transaccion[2] + '\n'
-                    s.sendall(emisor.encode())
-                    s.sendall(receptor.encode())
-                    s.sendall(cantidad.encode())
+                    s.send((input_user + "," + datos_transaccion).encode())
+                    #emisor = datos_transaccion[0] + '\n'
+                    #receptor = datos_transaccion[1] + '\n'
+                    #cantidad = datos_transaccion[2] + '\n'
+                    #s.sendall(emisor.encode())
+                    #s.sendall(receptor.encode())
+                    #s.sendall(cantidad.encode())
 
                     data = s.recv(1024).decode()
                 elif input_user == "0":
