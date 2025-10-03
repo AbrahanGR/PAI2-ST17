@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="script de login implementado en es server" />
+    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="script de login implementado en es server">
+      <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clientsocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientsocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_login.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serversocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/serversocket.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="base-de-datos-creada" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,22 +39,22 @@
     &quot;assignee&quot;: &quot;AbrahanGautiel&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/AbrahanGR/PAI1-ST17.git",
-    "accountId": "49ef0e1c-654e-48e3-bb50-381c7e923baa"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AbrahanGR/PAI1-ST17.git&quot;,
+    &quot;accountId&quot;: &quot;49ef0e1c-654e-48e3-bb50-381c7e923baa&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "AbrahanGR",
-    "repository": "PAI1-ST17"
+    &quot;owner&quot;: &quot;AbrahanGR&quot;,
+    &quot;repository&quot;: &quot;PAI1-ST17&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -66,9 +74,11 @@
     "Python.create_db.executor": "Run",
     "Python.create_tables.executor": "Run",
     "Python.hashing.executor": "Run",
+    "Python.server_login.executor": "Run",
     "Python.serversocket.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true"
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "ajustes-login"
   }
 }]]></component>
   <component name="SharedIndexes">

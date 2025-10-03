@@ -3,5 +3,5 @@ from hashing import contraseña
 
 def credentials():
     usuario = input("Introduzca su usuario: ")
-    contraseña = input("Introduzcas su contraseña: ")
+    contraseña = input("Introduzca su contraseña: ")
     return usuario + "," + contraseña

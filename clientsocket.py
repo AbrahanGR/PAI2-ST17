@@ -18,19 +18,21 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     #cifrado = cifrado.encode()
     #s.sendall(cifrado)
     #s.sendall(mensaje)
-
+        data = ""
         input_user = input("Elige una opción:\n 0: Salir\n 1: Iniciar sesión\n 2: Registrar nuevo usuario\n")
         if input_user == "0":
             s.send("0".encode())
             print("Hasta pronto")
             break
-        credentials = client_login.credentials()
-        s.send((input_user + "," + credentials).encode())
-        data = s.recv(1024).decode()
-    
-        print(data)
-        if data != "No se ha podido iniciar sesión":
+        elif input_user == "1" or input_user == "2":
+            credentials = client_login.credentials()
+            s.send((input_user + "," + credentials).encode())
+            data = s.recv(1024).decode()
+            print(data)
+        else:
+            print("Elija una opción válida")
 
+        if data == "Inicio de sesión exitoso":
             if input_user == "1":
                 input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
                 if input_user == "1":
@@ -38,5 +40,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif input_user == "0":
                     print("Cerrando sesión")
                     s.send("0".encode())
+        elif data == "Ha agotado sus intentos":
+            break
     s.close()
 #TODO: Hacer ataques de Fuerza bruta, man-in-the-middle, replay
