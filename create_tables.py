@@ -29,7 +29,7 @@ hash2 = hashing.hash_password("PEpA_s3gur4_IndEscIfRAblE")
 server_login.store_new_user("pepe", hash1, connection)
 server_login.store_new_user("pepa", hash2, connection)
 
-cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, PRIMARY KEY (origin, dst))")
+cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount INT, nonce INT PRIMARY KEY)")
 
 #Le damos permisos de lectura, escritura y edición de los datos sobre las tablas
 cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO {};").format(sql.Identifier("server")))

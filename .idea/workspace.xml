@@ -8,10 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clientsocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientsocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server_login.py" beforeDir="false" afterPath="$PROJECT_DIR$/server_login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serversocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/serversocket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_tables.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +75,11 @@
     "Python.serversocket.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "ajustes-login"
+    "git-widget-placeholder": "ajustes-login",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
   <component name="SharedIndexes">
