@@ -73,8 +73,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 receptor = datos[2]
                                 cantidad = float(datos[3])
 
-                                if transacciones.comprueba_credenciales(emisor, receptor, cantidad):
-                                    transacciones.realiza_transaccion(emisor, receptor, cantidad)
+                                if transacciones.comprueba_credenciales(emisor, receptor, cantidad, CONNECTION):
+                                    transacciones.realiza_transaccion(emisor, receptor, cantidad, CONNECTION)
+                                    data_server = "Transaccion realizada correctamente"
                                 else:
                                     data_server = "transaccion fallida"                                
 

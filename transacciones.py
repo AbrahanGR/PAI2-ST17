@@ -7,17 +7,8 @@ def crea_transaccion():
 
     return emisor + "," + receptor + "," + cantidad
 
-def comprueba_credenciales(emisor, receptor, cantidad):
-    CONNECTION = psycopg2.connect(
-    host="localhost",
-    port=5432,
-    database="PAI1-ST17",
-    user="server",
-    password="server_PAI1-ST17"
-    )
-    CONNECTION.autocommit=True
-
-    cursor = CONNECTION.cursor()
+def comprueba_credenciales(emisor, receptor, cantidad, connection):
+    cursor = connection.cursor()
 
     cursor.execute("SELECT username FROM users WHERE username = %s", (emisor,))
     usuario_encontrado = cursor.fetchone()[0]
@@ -38,19 +29,8 @@ def comprueba_credenciales(emisor, receptor, cantidad):
     cursor.close()
     return res
 
-def realiza_transaccion(emisor, receptor, cantidad):
-    CONNECTION = psycopg2.connect(
-    host="localhost",
-    port=5432,
-    database="PAI1-ST17",
-    user="server",
-    password="server_PAI1-ST17"
-    )
-    CONNECTION.autocommit=True
-
-    cursor = CONNECTION.cursor()
+def realiza_transaccion(emisor, receptor, cantidad, connection):
+    cursor = connection.cursor()
 
     cursor.execute("INSERT INTO transactions (origin, dst, amount) VALUES (%s, %s, %s)", (emisor, receptor, cantidad))
-
-    print("Transacción realizada correctamente")
     cursor.close()

@@ -34,22 +34,24 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         if data != "No se ha podido iniciar sesión":
 
             if input_user == "1":
-                input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
-                if input_user == "1":
-                    "TODO: Implementar transacciones para usuarios"
+                while True:
+                    input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
+                    if input_user == "1":
+                        "TODO: Implementar transacciones para usuarios"
 
-                    datos_transaccion = transacciones.crea_transaccion()
-                    s.send((input_user + "," + datos_transaccion).encode())
-                    #emisor = datos_transaccion[0] + '\n'
-                    #receptor = datos_transaccion[1] + '\n'
-                    #cantidad = datos_transaccion[2] + '\n'
-                    #s.sendall(emisor.encode())
-                    #s.sendall(receptor.encode())
-                    #s.sendall(cantidad.encode())
+                        datos_transaccion = transacciones.crea_transaccion()
+                        s.send((input_user + "," + datos_transaccion).encode())
+                        #emisor = datos_transaccion[0] + '\n'
+                        #receptor = datos_transaccion[1] + '\n'
+                        #cantidad = datos_transaccion[2] + '\n'
+                        #s.sendall(emisor.encode())
+                        #s.sendall(receptor.encode())
+                        #s.sendall(cantidad.encode())
 
-                    data = s.recv(1024).decode()
-                elif input_user == "0":
-                    print("Cerrando sesión")
-                    s.send("0".encode())
+                        data = s.recv(1024).decode()
+                    elif input_user == "0":
+                        print("Cerrando sesión")
+                        s.send("0".encode())
+                        break
     s.close()
 #TODO: Hacer ataques de Fuerza bruta, man-in-the-middle, replay
