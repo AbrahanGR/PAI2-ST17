@@ -52,6 +52,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     elif input_user == "0":
                         print("Cerrando sesión")
                         s.send("0".encode())
+                        break
         elif data == "Ha agotado sus intentos":
             break
     s.close()
