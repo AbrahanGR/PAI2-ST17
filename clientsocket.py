@@ -26,19 +26,19 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.send("0".encode())
             print("Hasta pronto")
             break
-        credentials = client_login.credentials()
-        s.send((input_user + "," + credentials).encode())
-        data = s.recv(1024).decode()
+        elif input_user == "1" or input_user == "2":
+            credentials = client_login.credentials()
+            s.send((input_user + "," + credentials).encode())
+            data = s.recv(1024).decode()
+            print(data)
+        else:
+            print("Elija una opción válida")
 
-        print(data)
-        if data != "No se ha podido iniciar sesión":
-
+        if data == "Inicio de sesión exitoso":
             if input_user == "1":
                 while True:
                     input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
                     if input_user == "1":
-                        "TODO: Implementar transacciones para usuarios"
-
                         datos_transaccion = transacciones.crea_transaccion()
                         s.send((input_user + "," + datos_transaccion).encode())
                         #emisor = datos_transaccion[0] + '\n'
@@ -52,6 +52,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     elif input_user == "0":
                         print("Cerrando sesión")
                         s.send("0".encode())
-                        break
+        elif data == "Ha agotado sus intentos":
+            break
     s.close()
 #TODO: Hacer ataques de Fuerza bruta, man-in-the-middle, replay

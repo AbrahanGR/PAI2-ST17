@@ -25,7 +25,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     conn, addr = s.accept()
     with conn:
         print(f"Connected by {addr}")
-        while True: #Bucle de inicio de sesión
+        intentos = 5 #Evitar Bruteforce
+        while intentos!=0: #Bucle de inicio de sesión
             data = conn.recv(1024).decode()
             '''
             if "," in data:
@@ -82,15 +83,20 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                             print(data_server)
                             conn.send(data_server.encode())
                     else:
-                        data_server = "No se ha podido iniciar sesión"
-                else:
-                    server_login.store_new_user(usuario, contraseña, CONNECTION)
-                    print("Usuario Registrado")
-                    data_server = "Usuario registrado correctamente"
-
+                        intentos -= 1
+                        if intentos != 0:
+                            data_server = "Usuario o contraseña incorrecta incorrectos. Le quedan "+ str(intentos) + " intentos."
+                        else:
+                            print("El usuario ha sobrepasado los intentos")
+                            data_server = "Ha agotado sus intentos"
+                elif datos[0] == "2":
+                    if server_login.store_new_user(usuario, contraseña, CONNECTION):
+                        print("Usuario Registrado")
+                        data_server = "Usuario registrado correctamente"
+                    else:
+                        data_server = "El usuario ya existe"
             if not data:
                 break
             conn.sendall(data_server.encode())
     CONNECTION.close()
     s.close()
-    print("Hasta pronto")
