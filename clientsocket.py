@@ -62,6 +62,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 print("Cerrando sesión")
                                 s.send("0".encode())
                                 break
+                            else:
+                                print("Elija una opción válida")
             elif data == "Ha agotado sus intentos":
                 print("Ha agotado sus intentos. Inténtelo de nuevo más tarde.")
                 break
