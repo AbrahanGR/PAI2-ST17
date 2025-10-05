@@ -1,6 +1,7 @@
 import socket
 import hmac
 import hashlib
+import os
 import transacciones
 from turtledemo.paint import switchupdown
 
@@ -30,17 +31,25 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             credentials = client_login.credentials()
             s.send((input_user + "," + credentials).encode())
             data = s.recv(1024).decode()
-            print(data)
+            datos = data.split(',')
+            usuario = datos[1]
         else:
             print("Elija una opción válida")
 
-        if data == "Inicio de sesión exitoso":
+        if datos[0] == "Inicio de sesión exitoso":
             if input_user == "1":
                 while True:
                     input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
                     if input_user == "1":
-                        datos_transaccion = transacciones.crea_transaccion()
-                        s.send((input_user + "," + datos_transaccion).encode())
+
+                        nonce = os.urandom(16).hex() #genera nonce de 128 bits (16 Bytes)
+
+
+                        datos_transaccion = transacciones.crea_transaccion(usuario)
+                        mensaje = (input_user + "," + datos_transaccion + "," + nonce).encode()
+                        s.send(mensaje)
+                        cifrado = hmac.new("c14v3_p4r4_hm4c".encode(), mensaje, hashlib.sha256).digest()
+                        s.send(cifrado)
                         #emisor = datos_transaccion[0] + '\n'
                         #receptor = datos_transaccion[1] + '\n'
                         #cantidad = datos_transaccion[2] + '\n'
@@ -49,9 +58,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                         #s.sendall(cantidad.encode())
 
                         data = s.recv(1024).decode()
+                        print(data)
                     elif input_user == "0":
                         print("Cerrando sesión")
                         s.send("0".encode())
+                        break
         elif data == "Ha agotado sus intentos":
             break
     s.close()
