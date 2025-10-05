@@ -21,7 +21,7 @@ connection.autocommit = True
 cursor = connection.cursor()
 
 cursor.execute("DROP TABLE IF EXISTS users")
-cursor.execute("CREATE TABLE users (username VARCHAR(255) PRIMARY KEY, password VARCHAR(128))")
+cursor.execute("CREATE TABLE users (username VARCHAR(255) PRIMARY KEY, password VARCHAR(113))") #contraseña: 64(256 bits/32 bytes) + ":" + salt: 48(192 bits/24 bytes) = 113 caracteres hex
 
 #Introducir usuarios prerregistrados
 hash1 = hashing.hash_password("P3p3*sEgUrO*1nd3sc1fr4bl3")
@@ -30,7 +30,7 @@ server_login.store_new_user("pepe", hash1, connection)
 server_login.store_new_user("pepa", hash2, connection)
 
 cursor.execute("DROP TABLE IF EXISTS transactions")
-cursor.execute("CREATE TABLE transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount INT, nonce VARCHAR(255) PRIMARY KEY)")
+cursor.execute("CREATE TABLE transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, nonce VARCHAR(32) PRIMARY KEY)") #nonce: 32(128 bits/16 bytes)
 
 #cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount INT, nonce INT PRIMARY KEY)")
 

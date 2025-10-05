@@ -3,7 +3,6 @@ import hmac
 import hashlib
 import os
 import transacciones
-from turtledemo.paint import switchupdown
 
 import client_login
 
@@ -31,14 +30,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             credentials = client_login.credentials()
             s.send((input_user + "," + credentials).encode())
             data = s.recv(1024).decode()
-            print(data)
+            #print(data)
             if "," in data:
                 datos = data.split(',')
                 usuario = datos[1]
                 if datos[0] == "Inicio de sesión exitoso":
+                    print("Bienvenido.")
                     if input_user == "1":
                         while True:
-                            input_user = input("Bienvenido. Seleccione una acción\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
+                            input_user = input("Seleccione una acción:\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
                             if input_user == "1":
 
                                 nonce = os.urandom(16).hex() #genera nonce de 128 bits (16 Bytes)
@@ -62,8 +62,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 print("Cerrando sesión")
                                 s.send("0".encode())
                                 break
-                elif data == "Ha agotado sus intentos":
-                    break
+            elif data == "Ha agotado sus intentos":
+                print("Ha agotado sus intentos. Inténtelo de nuevo más tarde.")
+                break
             else:
                 print("Error: " + data)
         else:

@@ -72,31 +72,35 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 break
                             elif "," in data:
                                 datos = data.split(',')
-                                
-                                emisor = datos[1]
-                                receptor = datos[2]
-                                cantidad = float(datos[3])
-                                nonce = datos[4]
+                                try:
+                                    emisor = datos[1]
+                                    receptor = datos[2]
+                                    cantidad = float(datos[3])
+                                    nonce = datos[4]
 
-                                res, mensaje = transacciones.comprueba_credenciales(receptor, cantidad, CONNECTION, nonce)
+                                    res, mensaje = transacciones.comprueba_credenciales(receptor, cantidad, CONNECTION, nonce)
 
-                                if res:
-                                    cifrado_comprobado = hmac.new("c14v3_p4r4_hm4c".encode(), data.encode(), hashlib.sha256).digest()
-                                    if hmac.compare_digest(cifrado, cifrado_comprobado):
-                                        transacciones.realiza_transaccion(usuario, receptor, cantidad, CONNECTION, nonce)
-                                        data_server = "Transaccion realizada correctamente: " + emisor + " -> " + str(cantidad) + " -> " + receptor
-                                    
+                                    if res:
+                                        cifrado_comprobado = hmac.new("c14v3_p4r4_hm4c".encode(), data.encode(), hashlib.sha256).digest()
+                                        if hmac.compare_digest(cifrado, cifrado_comprobado):
+                                            transacciones.realiza_transaccion(usuario, receptor, cantidad, CONNECTION, nonce)
+                                            data_server = "Transaccion realizada correctamente: " + emisor + " -> " + str(cantidad) + " -> " + receptor
+
+                                        else:
+                                            data_server = "El mensaje es FALSO"
                                     else:
-                                        data_server = "El mensaje es FALSO"
-                                else:
-                                    data_server = mensaje
-
+                                        data_server = mensaje
+                                except ValueError:
+                                    data_server = "El valor introducido no es un número"
                             print(data_server)
                             conn.send(data_server.encode())
                     else:
                         intentos -= 1
                         if intentos != 0:
-                            data_server = "Usuario o contraseña incorrecta incorrectos. Le quedan "+ str(intentos) + " intentos."
+                            if intentos == 1:
+                                data_server = "Usuario o contraseña incorrecta incorrectos. Le quedan " + str(intentos) + " intento."
+                            else:
+                                data_server = "Usuario o contraseña incorrecta incorrectos. Le quedan " + str(intentos) + " intentos."
                         else:
                             print("El usuario ha sobrepasado los intentos")
                             data_server = "Ha agotado sus intentos"
