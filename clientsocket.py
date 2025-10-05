@@ -68,7 +68,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print("Error: " + data)
         else:
             print("Elija una opción válida")
-
-
     s.close()
 #TODO: Hacer ataques de Fuerza bruta, man-in-the-middle, replay
