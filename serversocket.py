@@ -3,6 +3,7 @@
 import socket
 import hmac
 import hashlib
+import secrets
 
 import psycopg2
 
@@ -47,10 +48,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if data == "0":
                 break
             elif "," in data:
-                print(data)
+                #print(data)
                 datos = data.split(',')
                 print(f"recibido: {datos[1]}")
-                print(f"recibido: {datos[2]}")
+                #print(f"recibido: {datos[2]}")
 
                 usuario = datos[1]
                 contraseña = datos[2]
@@ -58,27 +59,37 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 if datos[0] == "1":
                     if server_login.login_user(usuario, contraseña, CONNECTION):
                         data_server = "Inicio de sesión exitoso"
-                        conn.send(data_server.encode())
+                        conn.send((data_server + "," + usuario).encode()) #MODIFICADO
                         print(data_server)
                         data_server = ""
                         while True: #Bucle de transacciones
                             data = conn.recv(1024).decode()
+                            cifrado = conn.recv(1024)
+                            print(data)
+                            print(cifrado)
                             if data == "0":
                                 print("Sesión cerrada")
                                 break
                             elif "," in data:
                                 datos = data.split(',')
-                                #"TODO: Implementar transacciones para usuarios"
                                 
                                 emisor = datos[1]
                                 receptor = datos[2]
                                 cantidad = float(datos[3])
+                                nonce = datos[4]
 
-                                if transacciones.comprueba_credenciales(emisor, receptor, cantidad, CONNECTION):
-                                    transacciones.realiza_transaccion(emisor, receptor, cantidad, CONNECTION)
-                                    data_server = "Transaccion realizada correctamente"
+                                res, mensaje = transacciones.comprueba_credenciales(receptor, cantidad, CONNECTION, nonce)
+
+                                if res:
+                                    cifrado_comprobado = hmac.new("c14v3_p4r4_hm4c".encode(), data.encode(), hashlib.sha256).digest()
+                                    if hmac.compare_digest(cifrado, cifrado_comprobado):
+                                        transacciones.realiza_transaccion(usuario, receptor, cantidad, CONNECTION, nonce)
+                                        data_server = "Transaccion realizada correctamente: " + emisor + " -> " + str(cantidad) + " -> " + receptor
+                                    
+                                    else:
+                                        data_server = "El mensaje es FALSO"
                                 else:
-                                    data_server = "transaccion fallida"                                
+                                    data_server = mensaje
 
                             print(data_server)
                             conn.send(data_server.encode())
