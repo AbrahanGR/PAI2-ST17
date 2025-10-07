@@ -56,7 +56,7 @@ class TestSecurity(unittest.TestCase):
                 s.connect((HOST, PORT))
                 s.send(message.encode())  # Invia il tentativo di login ripetuto
                 response = s.recv(1024).decode()  # Ricevi la risposta dal server
-                print(f"Tentativo di login (Replay) con la password {password} | Risposta: {response}")
+                print(f"Tentativo de login (Replay) con la password {password} | Respuesta: {response}")
                 self.assertNotEqual(response, "Inicio de sesión exitoso")  # Assicurati che la risposta sia diversa per un replay
 
     # il test del MITM (Man-in-the-Middle)
@@ -75,14 +75,14 @@ class TestSecurity(unittest.TestCase):
                 s.connect((HOST, PORT))
                 s.send(original_message.encode())  # enviamos el mensaje original
                 response = s.recv(1024).decode()  
-                print(f"Tentativo di login originale con la password {password} | Risposta: {response}")
+                print(f"Tentativo de login original con la password {password} | Respuesta: {response}")
             
             # ora enviamos el mensaje cambiado (MITM) al server
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((HOST, PORT))
                 s.send(tampered_message.encode())  # enviamos el mensaje cambiado
                 response = s.recv(1024).decode()  
-                print(f"Tentativo di login (MITM) con la password {tampered_password} | Risposta: {response}")
+                print(f"Tentativo de login (MITM) con la password {tampered_password} | Respuesta: {response}")
                 self.assertNotEqual(response, "Inicio de sesión exitoso")  # Assicurati che la risposta sia diversa per un MITM
 
 if __name__ == "__main__":
