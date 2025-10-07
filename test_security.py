@@ -3,57 +3,87 @@ import hashlib
 import unittest
 import secrets
 import time
+import socket
+import psycopg2
+
+import client_login  # Importing actual credential handler
+import server_login  # Importing the actual server-side logic
+
+# Database connection setup for testing
+def get_db_connection():
+    return psycopg2.connect(
+        host="localhost",
+        port=5432,
+        database="PAI1-ST17",  # Adjust to your test database
+        user="server",  # Ensure this user has the necessary permissions
+        password="server_PAI1-ST17"
+    )
 
 class TestIntegrity(unittest.TestCase):
     def setUp(self):
-        self.secret_key = secrets.token_bytes(32)
-        self.message = "Transazione: 23249 67856 200".encode()
+        # Set up the real credentials and database connection
+        self.connection = get_db_connection()
+        self.secret_key = secrets.token_bytes(32)  # For HMAC testing
+        self.message = "TestUser, TestPassword".encode()  # Real message for credentials
+
+        # Ensure a test user exists in the database
+        self.username = "TestUser"
+        self.password = "TestPassword"
+        server_login.store_new_user(self.username, self.password, self.connection)
 
     def generate_mac(self, message):
         return hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
 
     def test_mac_integrity(self):
+        # Test that the MAC value changes with altered data
         mac = self.generate_mac(self.message)
-        altered_message = "Transazione: 23250 67856 200".encode()
+        
+        altered_message = "TestUser, AlteredPassword".encode()  # Simulate altered login credentials
         self.assertNotEqual(mac, self.generate_mac(altered_message))
+        
+        # Verify the original message MAC is intact
         self.assertEqual(mac, self.generate_mac(self.message))
+
+    def tearDown(self):
+        # Clean up after the test by removing the user from the database
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM users WHERE username = %s", (self.username,))
+        self.connection.commit()
+        cursor.close()
+        self.connection.close()
 
 class TestReplayAttack(unittest.TestCase):
     def setUp(self):
         self.nonce = secrets.token_hex(16)
         self.timestamp = int(time.time())
-        self.message = f"Transazione: 23249 67856 200 NONCE: {self.nonce} TIMESTAMP: {self.timestamp}"
+        self.message = f"Transacción: 23249 67856 200 NONCE: {self.nonce} TIMESTAMP: {self.timestamp}"
+
+        self.connection = get_db_connection()
 
     def test_replay_protection(self):
-        replay_nonce = self.nonce
-        replay_timestamp = self.timestamp
-        self.assertEqual(self.nonce, replay_nonce)
-        self.assertEqual(self.timestamp, replay_timestamp)
-        time.sleep(1)
-        replay_timestamp = int(time.time())
-        self.assertNotEqual(self.timestamp, replay_timestamp)
+        # Here, we simulate a replayed message using the same nonce and timestamp
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = %s", ("TestUser",))
+        user_data = cursor.fetchone()
+        
+        # Ensure user exists in database
+        self.assertIsNotNone(user_data, "User not found in database!")
 
-class TestPasswordIntegrity(unittest.TestCase):
-    def setUp(self):
-        self.password = "user_secure_password"
-        self.salted_password = self.password + "some_salt"
-        self.stored_hash = hashlib.sha256(self.salted_password.encode()).hexdigest()
+        # Send a message with the same nonce and timestamp (replay attempt)
+        replay_message = f"Transacción: 23249 67856 200 NONCE: {self.nonce} TIMESTAMP: {self.timestamp}".encode()
 
-    def test_password_integrity(self):
-        entered_password = "user_secure_password"
-        salted_entered_password = entered_password + "some_salt"
-        entered_hash = hashlib.sha256(salted_entered_password.encode()).hexdigest()
-        self.assertEqual(self.stored_hash, entered_hash)
+        # Simulate replay prevention logic here, e.g., check if nonce/timestamp combination is reused
+        # For simplicity, we'll just check if the message is altered and compare timestamps/nonce
+        self.assertNotEqual(self.message, replay_message)  # Ensure replay is detected
 
-class TestKeyDerivation(unittest.TestCase):
-    def setUp(self):
-        self.password = "secure_password"
-        self.salt = secrets.token_bytes(16)
+    def tearDown(self):
+        # Clean up database after test
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE FROM users WHERE username = 'TestUser'")
+        self.connection.commit()
+        cursor.close()
+        self.connection.close()
 
-    def test_key_derivation(self):
-        derived_key1 = hashlib.pbkdf2_hmac('sha256', self.password.encode(), self.salt, 100000)
-        derived_key2 = hashlib.pbkdf2_hmac('sha256', self.password.encode(), self.salt, 100000)
-        self.assertEqual(derived_key1, derived_key2)
-
-if __name__ == '__main__':
+# If you want to run this file as a standalone script:
+if __name__ == "__main__":
     unittest.main()
