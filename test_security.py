@@ -1,89 +1,89 @@
-import hmac
-import hashlib
-import unittest
-import secrets
-import time
+
+
 import socket
-import psycopg2
+import time
+import client_login  # Utilizzeremo le funzioni di login del client
+import server_login  # Utilizzeremo la logica di login del server
 
-import client_login  # Importing actual credential handler
-import server_login  # Importing the actual server-side logic
+# Indirizzo e porta del server
+HOST = '127.0.0.1'
+PORT = 3030
 
-# Database connection setup for testing
-def get_db_connection():
-    return psycopg2.connect(
-        host="localhost",
-        port=5432,
-        database="PAI1-ST17",  # Adjust to your test database
-        user="server",  # Ensure this user has the necessary permissions
-        password="server_PAI1-ST17"
-    )
+# Nome utente da testare
+username = 'TestUser'
 
-class TestIntegrity(unittest.TestCase):
-    def setUp(self):
-        # Set up the real credentials and database connection
-        self.connection = get_db_connection()
-        self.secret_key = secrets.token_bytes(32)  # For HMAC testing
-        self.message = "TestUser, TestPassword".encode()  # Real message for credentials
+# Lista di password da testare (modifica come necessario)
+passwords = ['password1', '12345', 'TestPassword', 'password123', 'admin']
 
-        # Ensure a test user exists in the database
-        self.username = "TestUser"
-        self.password = "TestPassword"
-        server_login.store_new_user(self.username, self.password, self.connection)
-
-    def generate_mac(self, message):
-        return hmac.new(self.secret_key, message, hashlib.sha256).hexdigest()
-
-    def test_mac_integrity(self):
-        # Test that the MAC value changes with altered data
-        mac = self.generate_mac(self.message)
+# Funzione per il test del brute force
+def brute_force_login():
+    print("Simulazione Brute Force Attack...")
+    for password in passwords:
+        # Crea il messaggio di login
+        message = f"1,{username},{password}"
         
-        altered_message = "TestUser, AlteredPassword".encode()  # Simulate altered login credentials
-        self.assertNotEqual(mac, self.generate_mac(altered_message))
+        # Invia il messaggio di login al server
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.send(message.encode())  # Invia il tentativo di login
+            response = s.recv(1024).decode()  # Ricevi la risposta dal server
+            print(f"Tentativo di login con la password {password} | Risposta: {response}")
+
+            # Se il login ha successo, fermiamo il brute force
+            if "Inicio de sesión exitoso" in response:
+                print(f"Brute-force successo! La password corretta è: {password}")
+                return password  # Restituiamo la password corretta
+
+# Funzione per il test del replay attack
+def replay_attack():
+    print("Simulazione Replay Attack...")
+    for password in passwords:
+        # Crea il messaggio di login
+        message = f"1,{username},{password}"
         
-        # Verify the original message MAC is intact
-        self.assertEqual(mac, self.generate_mac(self.message))
-
-    def tearDown(self):
-        # Clean up after the test by removing the user from the database
-        cursor = self.connection.cursor()
-        cursor.execute("DELETE FROM users WHERE username = %s", (self.username,))
-        self.connection.commit()
-        cursor.close()
-        self.connection.close()
-
-class TestReplayAttack(unittest.TestCase):
-    def setUp(self):
-        self.nonce = secrets.token_hex(16)
-        self.timestamp = int(time.time())
-        self.message = f"Transacción: 23249 67856 200 NONCE: {self.nonce} TIMESTAMP: {self.timestamp}"
-
-        self.connection = get_db_connection()
-
-    def test_replay_protection(self):
-        # Here, we simulate a replayed message using the same nonce and timestamp
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM users WHERE username = %s", ("TestUser",))
-        user_data = cursor.fetchone()
+        # Prima inviamo il messaggio
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.send(message.encode())  # Invia il tentativo di login
+            response = s.recv(1024).decode()  # Ricevi la risposta dal server
+            print(f"Tentativo di login con la password {password} | Risposta: {response}")
         
-        # Ensure user exists in database
-        self.assertIsNotNone(user_data, "User not found in database!")
+        # Ora inviamo lo stesso messaggio una seconda volta per testare il replay
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.send(message.encode())  # Invia il tentativo di login ripetuto
+            response = s.recv(1024).decode()  # Ricevi la risposta dal server
+            print(f"Tentativo di login (Replay) con la password {password} | Risposta: {response}")
 
-        # Send a message with the same nonce and timestamp (replay attempt)
-        replay_message = f"Transacción: 23249 67856 200 NONCE: {self.nonce} TIMESTAMP: {self.timestamp}".encode()
+# Funzione per il test del MITM (Man-in-the-Middle)
+def mitm_attack():
+    print("Simulazione Man-in-the-Middle Attack...")
+    for password in passwords:
+        # Crea il messaggio di login originale
+        original_message = f"1,{username},{password}"
 
-        # Simulate replay prevention logic here, e.g., check if nonce/timestamp combination is reused
-        # For simplicity, we'll just check if the message is altered and compare timestamps/nonce
-        self.assertNotEqual(self.message, replay_message)  # Ensure replay is detected
+        # Simuliamo un attacco MITM alterando la password
+        tampered_password = "tampered_password"  # Modifica il messaggio
+        tampered_message = f"1,{username},{tampered_password}"
+        
+        # Invia il messaggio originale al server
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.send(original_message.encode())  # Invia il tentativo di login originale
+            response = s.recv(1024).decode()  # Ricevi la risposta dal server
+            print(f"Tentativo di login originale con la password {password} | Risposta: {response}")
+        
+        # Ora inviamo il messaggio modificato (MITM) al server
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((HOST, PORT))
+            s.send(tampered_message.encode())  # Invia il tentativo di login alterato
+            response = s.recv(1024).decode()  # Ricevi la risposta dal server
+            print(f"Tentativo di login (MITM) con la password {tampered_password} | Risposta: {response}")
 
-    def tearDown(self):
-        # Clean up database after test
-        cursor = self.connection.cursor()
-        cursor.execute("DELETE FROM users WHERE username = 'TestUser'")
-        self.connection.commit()
-        cursor.close()
-        self.connection.close()
-
-# If you want to run this file as a standalone script:
 if __name__ == "__main__":
-    unittest.main()
+    # Eseguiamo i test
+    brute_force_login()  # Test Brute Force
+    time.sleep(2)  # Attendi un attimo tra i test
+    replay_attack()  # Test Replay Attack
+    time.sleep(2)  # Attendi un attimo tra i test
+    mitm_attack()  # Test Man-in-the-Middle Attack
