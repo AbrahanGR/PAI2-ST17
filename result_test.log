@@ -1,0 +1,9 @@
+test_mac_integrity (test_security.TestIntegrity.test_mac_integrity) ... ok
+test_key_derivation (test_security.TestKeyDerivation.test_key_derivation) ... ok
+test_password_integrity (test_security.TestPasswordIntegrity.test_password_integrity) ... ok
+test_replay_protection (test_security.TestReplayAttack.test_replay_protection) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.031s
+
+OK
