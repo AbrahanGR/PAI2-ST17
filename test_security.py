@@ -2,8 +2,8 @@
 
 import socket
 import time
-import client_login  # Utilizzeremo le funzioni di login del client
-import server_login  # Utilizzeremo la logica di login del server
+import client_login  
+import server_login  
 
 # Indirizzo e porta del server
 HOST = '127.0.0.1'
@@ -12,8 +12,8 @@ PORT = 3030
 # Nome utente da testare
 username = 'TestUser'
 
-# Lista di password da testare (modifica come necessario)
-passwords = ['password1', '12345', 'TestPassword', 'password123', 'admin']
+# Lista di password da testare
+passwords = ['password1', '12345', 'TestPassword', 'password123', 'admin','abcdeg','Test']
 
 # Funzione per il test del brute force
 def brute_force_login():
