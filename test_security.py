@@ -49,7 +49,7 @@ class TestSecurity(unittest.TestCase):
                 s.connect((HOST, PORT))
                 s.send(message.encode())  # Invia il tentativo di login
                 response = s.recv(1024).decode()  # Ricevi la risposta dal server
-                print(f"Tentativo di login con la password {password} | Risposta: {response}")
+                print(f"Tentativo de login con la password {password} | Respuesta: {response}")
             
             # lo enviamos otra vez para testar el replay
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
