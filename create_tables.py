@@ -12,7 +12,7 @@ import server_login
 connection = psycopg2.connect(
     host="localhost",
     port=5432,
-    database="PAI1-ST17",
+    database="PAI2-ST17",
     user="admin",
     password="admin_PAI1-ST17"
 )
@@ -29,10 +29,8 @@ hash2 = hashing.hash_password("PEpA_s3gur4_IndEscIfRAblE")
 server_login.store_new_user("pepe", hash1, connection)
 server_login.store_new_user("pepa", hash2, connection)
 
-cursor.execute("DROP TABLE IF EXISTS transactions")
-cursor.execute("CREATE TABLE transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount FLOAT, nonce VARCHAR(32) PRIMARY KEY)") #nonce: 32(128 bits/16 bytes)
-
-#cursor.execute("CREATE TABLE IF NOT EXISTS transactions (origin VARCHAR(255) NOT NULL, dst VARCHAR(255) NOT NULL, amount INT, nonce INT PRIMARY KEY)")
+cursor.execute("DROP TABLE IF EXISTS messages")
+cursor.execute("CREATE TABLE messages (username VARCHAR(255) NOT NULL, msg_num INT, nonce VARCHAR(32) PRIMARY KEY)") #nonce: 32(128 bits/16 bytes)
 
 #Le damos permisos de lectura, escritura y edición de los datos sobre las tablas
 cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO {};").format(sql.Identifier("server")))
@@ -42,4 +40,4 @@ cursor.execute(sql.SQL("GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO {};").f
 cursor.close()
 connection.close()
 
-print("Tablas de usuarios y transacciones creadas exitosamente")
+print("Tablas de usuarios y mensajes creadas exitosamente")

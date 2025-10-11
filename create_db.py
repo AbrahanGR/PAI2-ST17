@@ -17,17 +17,19 @@ connection = psycopg2.connect(
     port=5432,
     database="postgres",
     user="postgres",
-    password="ssii/st_17" #cambiar contraseña por la definida al instalar Postgres
+    password="root" #cambiar contraseña por la definida al instalar Postgres
 )
 connection.autocommit = True
 cursor = connection.cursor()
 
 #Consulta segura, evita SQLi. Identifier sirve para las columnas y otros identificadores y los valores se introducen mediante "%s" y se pasan como argumento de execute en forma de tupla
+#IMPORTANTE: DESCOMENTAR SI AUN NO TIENES LOS USUARIOS CREADOS, USAREMOS LOS USUARIOS DE LA PAI1
+'''
 cursor.execute(sql.SQL("CREATE USER {} WITH PASSWORD %s;").format(sql.Identifier("admin")), ('admin_PAI1-ST17',)) #En la práctica la contraseña deberá ser segura
 
 cursor.execute(sql.SQL("CREATE USER {} WITH PASSWORD %s;").format(sql.Identifier("server")), ('server_PAI1-ST17',)) #En la práctica la contraseña deberá ser segura
-
-cursor.execute(sql.SQL("CREATE DATABASE {} OWNER {}").format(sql.Identifier("PAI1-ST17"), sql.Identifier("admin")))
+'''
+cursor.execute(sql.SQL("CREATE DATABASE {} OWNER {}").format(sql.Identifier("PAI2-ST17"), sql.Identifier("admin")))
 
 cursor.close()
 connection.close()

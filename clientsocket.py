@@ -2,14 +2,26 @@ import socket
 import hmac
 import hashlib
 import os
+import ssl
+
 import mensajes
 
 import client_login
 
-HOST = "127.0.0.1"  # The server's hostname or IP address
+HOST = "localhost"  # The server's hostname or IP address
 PORT = 3030  # The port used by the server
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+#Crear el socket primero para luego "envolverlo" con SSL
+#TODO: ChipherSuite de TLSv1.3 o nuestra propia ChiperSuite
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+#TODO: quitar estas líneas, añadiendo que confie en nuestros certificados
+ssl_context.check_hostname = False  # No verifica el nombre del host
+ssl_context.verify_mode = ssl.CERT_NONE  # No verifica el certificado del servidor (solo para pruebas)
+
+with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
     s.connect((HOST, PORT))
     '''
     s.sendall(b"Hello, world")
@@ -38,24 +50,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     print("Bienvenido.")
                     if input_user == "1":
                         while True:
-                            input_user = input("Seleccione una acción:\n 0: Cerrar sesión \n 1: Hacer una transacción\n")
+                            input_user = input("Seleccione una acción:\n 0: Cerrar sesión \n 1: Enviar un mensaje al servidor\n")
                             if input_user == "1":
 
-                                nonce = os.urandom(16).hex() #genera nonce de 128 bits (16 Bytes)
 
-
-                                datos_transaccion = transacciones.crea_mensaje(usuario)
-                                mensaje = (input_user + "," + datos_transaccion + "," + nonce).encode()
+                                contenido_mensaje = mensajes.crea_mensaje(usuario)
+                                mensaje = (input_user + "," + contenido_mensaje).encode()
                                 s.send(mensaje)
-                                cifrado = hmac.new("c14v3_p4r4_hm4c".encode(), mensaje, hashlib.sha256).digest()
-                                s.send(cifrado)
-                                #emisor = datos_transaccion[0] + '\n'
-                                #receptor = datos_transaccion[1] + '\n'
-                                #cantidad = datos_transaccion[2] + '\n'
-                                #s.sendall(emisor.encode())
-                                #s.sendall(receptor.encode())
-                                #s.sendall(cantidad.encode())
-
                                 data = s.recv(1024).decode()
                                 print(data)
                             elif input_user == "0":
