@@ -1,11 +1,8 @@
 import psycopg2
 
-def crea_transaccion(emisor):
-    #emisor = input("Usuario del emisor: ")
-    receptor = input("Usuario al que le quieres hacer la transaccion: ")
-    cantidad = input("Cantidad que quieres transferir: ")
-
-    return emisor + "," + receptor + "," + cantidad
+def crea_mensaje(emisor):
+    mensaje = input("Introduce el mensaje: ")
+    return mensaje
 
 def comprueba_credenciales(receptor, cantidad, connection, nonce):
     cursor = connection.cursor()

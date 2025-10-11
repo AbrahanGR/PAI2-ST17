@@ -2,7 +2,7 @@ import socket
 import hmac
 import hashlib
 import os
-import transacciones
+import mensajes
 
 import client_login
 
@@ -44,7 +44,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                                 nonce = os.urandom(16).hex() #genera nonce de 128 bits (16 Bytes)
 
 
-                                datos_transaccion = transacciones.crea_transaccion(usuario)
+                                datos_transaccion = transacciones.crea_mensaje(usuario)
                                 mensaje = (input_user + "," + datos_transaccion + "," + nonce).encode()
                                 s.send(mensaje)
                                 cifrado = hmac.new("c14v3_p4r4_hm4c".encode(), mensaje, hashlib.sha256).digest()
