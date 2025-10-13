@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="Ajustes">
+    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="Sockets envueltos en SSL">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clientsocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientsocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/create_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_tables.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mensajes.py" beforeDir="false" afterPath="$PROJECT_DIR$/mensajes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/serversocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/serversocket.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,29 +72,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.clientsocket.executor": "Run",
-    "Python.conexion_db.executor": "Run",
-    "Python.create_db.executor": "Run",
-    "Python.create_tables.executor": "Run",
-    "Python.ejemploclientvpnssl.executor": "Run",
-    "Python.ejemploservervpnssl.executor": "Run",
-    "Python.hashing.executor": "Run",
-    "Python.server_login.executor": "Run",
-    "Python.serversocket.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.clientsocket.executor&quot;: &quot;Run&quot;,
+    &quot;Python.conexion_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.create_tables.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ejemploclientvpnssl.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ejemploservervpnssl.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hashing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.server_login.executor&quot;: &quot;Run&quot;,
+    &quot;Python.serversocket.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -112,7 +112,8 @@
       <updated>1758878052011</updated>
       <workItem from="1759679456990" duration="970000" />
       <workItem from="1759700373030" duration="3977000" />
-      <workItem from="1760208271432" duration="8135000" />
+      <workItem from="1760208271432" duration="9064000" />
+      <workItem from="1760292576198" duration="11565000" />
     </task>
     <task id="LOCAL-00001" summary="Base de datos creada">
       <option name="closed" value="true" />
@@ -146,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759601909347</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Sockets envueltos en SSL">
+      <option name="closed" value="true" />
+      <created>1760217325480</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1760217325480</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,16 +165,18 @@
     <MESSAGE value="Base de datos creada" />
     <MESSAGE value="script de login implementado en es server" />
     <MESSAGE value="Ajustes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajustes" />
+    <MESSAGE value="Sockets envueltos en SSL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sockets envueltos en SSL" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PAI2_ST17$create_tables.coverage" NAME="create_tables Coverage Results" MODIFIED="1760210184461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PAI2_ST17$create_tables.coverage" NAME="create_tables Coverage Results" MODIFIED="1760292974331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI1_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1759704210948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PAI2_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1760209495114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PAI2_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1760313841082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI1_ST17$create_tables.coverage" NAME="create_tables Coverage Results" MODIFIED="1759704366370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI2_ST17$ejemploservervpnssl.coverage" NAME="ejemploservervpnssl Coverage Results" MODIFIED="1760209511331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI2_ST17$ejemploclientvpnssl.coverage" NAME="ejemploclientvpnssl Coverage Results" MODIFIED="1760209517896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI1_ST17$clientsocket.coverage" NAME="clientsocket Coverage Results" MODIFIED="1759704212541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI2_ST17$create_db.coverage" NAME="create_db Coverage Results" MODIFIED="1760209670054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PAI2_ST17$clientsocket.coverage" NAME="clientsocket Coverage Results" MODIFIED="1760313842401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

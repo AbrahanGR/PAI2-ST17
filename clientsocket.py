@@ -23,15 +23,6 @@ ssl_context.verify_mode = ssl.CERT_NONE  # No verifica el certificado del servid
 
 with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
     s.connect((HOST, PORT))
-    '''
-    s.sendall(b"Hello, world")
-    clave = b"clave secreta secretisima"
-    mensaje = b"comprar pan"
-    cifrado = hmac.new(clave, mensaje, hashlib.sha256).hexdigest()+"\n"
-    cifrado = cifrado.encode()
-    s.sendall(cifrado)
-    s.sendall(mensaje)
-    '''
     while True:
         input_user = input("Elige una opción:\n 0: Salir\n 1: Iniciar sesión\n 2: Registrar nuevo usuario\n")
         if input_user == "0":
@@ -47,16 +38,13 @@ with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
                 datos = data.split(',')
                 usuario = datos[1]
                 if datos[0] == "Inicio de sesión exitoso":
-                    print("Bienvenido.")
+                    print("Bienvenido, " + usuario)
                     if input_user == "1":
                         while True:
                             input_user = input("Seleccione una acción:\n 0: Cerrar sesión \n 1: Enviar un mensaje al servidor\n")
                             if input_user == "1":
-
-
-                                contenido_mensaje = mensajes.crea_mensaje(usuario)
-                                mensaje = (input_user + "," + contenido_mensaje).encode()
-                                s.send(mensaje)
+                                contenido_mensaje = mensajes.crea_mensaje()
+                                s.send((input_user + "," + contenido_mensaje).encode())
                                 data = s.recv(1024).decode()
                                 print(data)
                             elif input_user == "0":
@@ -65,6 +53,8 @@ with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
                                 break
                             else:
                                 print("Elija una opción válida")
+            elif data == "Usuario registrado correctamente":
+                print("Usuario registrado. Ahora inicie sesión")
             elif data == "Ha agotado sus intentos":
                 print("Ha agotado sus intentos. Inténtelo de nuevo más tarde.")
                 break
@@ -73,4 +63,3 @@ with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
         else:
             print("Elija una opción válida")
     s.close()
-#TODO: Hacer ataques de Fuerza bruta, man-in-the-middle, replay
