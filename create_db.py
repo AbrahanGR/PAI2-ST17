@@ -17,7 +17,7 @@ connection = psycopg2.connect(
     port=5432,
     database="postgres",
     user="postgres",
-    password="root" #cambiar contraseña por la definida al instalar Postgres
+    password="ssii/st_17" #cambiar contraseña por la definida al instalar Postgres
 )
 connection.autocommit = True
 cursor = connection.cursor()
