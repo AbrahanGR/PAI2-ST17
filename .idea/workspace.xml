@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="Sockets envueltos en SSL">
+    <list default="true" id="3d86fc0f-1620-4ea1-9e35-31e9b44e5241" name="Changes" comment="Envío y recepcion de mensajes implementado">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/clientsocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/clientsocket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/create_tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_tables.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mensajes.py" beforeDir="false" afterPath="$PROJECT_DIR$/mensajes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/serversocket.py" beforeDir="false" afterPath="$PROJECT_DIR$/serversocket.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +110,8 @@
       <workItem from="1759679456990" duration="970000" />
       <workItem from="1759700373030" duration="3977000" />
       <workItem from="1760208271432" duration="9064000" />
-      <workItem from="1760292576198" duration="11565000" />
+      <workItem from="1760292576198" duration="11747000" />
+      <workItem from="1760612649204" duration="2572000" />
     </task>
     <task id="LOCAL-00001" summary="Base de datos creada">
       <option name="closed" value="true" />
@@ -155,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760217325480</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Envío y recepcion de mensajes implementado">
+      <option name="closed" value="true" />
+      <created>1760314273745</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1760314273745</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,12 +172,13 @@
     <MESSAGE value="script de login implementado en es server" />
     <MESSAGE value="Ajustes" />
     <MESSAGE value="Sockets envueltos en SSL" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sockets envueltos en SSL" />
+    <MESSAGE value="Envío y recepcion de mensajes implementado" />
+    <option name="LAST_COMMIT_MESSAGE" value="Envío y recepcion de mensajes implementado" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/PAI2_ST17$create_tables.coverage" NAME="create_tables Coverage Results" MODIFIED="1760292974331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI1_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1759704210948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PAI2_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1760313841082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PAI2_ST17$serversocket.coverage" NAME="serversocket Coverage Results" MODIFIED="1760614328502" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI1_ST17$create_tables.coverage" NAME="create_tables Coverage Results" MODIFIED="1759704366370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI2_ST17$ejemploservervpnssl.coverage" NAME="ejemploservervpnssl Coverage Results" MODIFIED="1760209511331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PAI2_ST17$ejemploclientvpnssl.coverage" NAME="ejemploclientvpnssl Coverage Results" MODIFIED="1760209517896" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

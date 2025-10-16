@@ -31,7 +31,8 @@ ssl_context.minimum_version = ssl.TLSVersion.TLSv1_3 #Seleccionamos la version 1
 cipher_suites = (
     "TLS_AES_256_GCM_SHA384:"
     "TLS_CHACHA20_POLY1305_SHA256:"
-    "TLS_AES_128_GCM_SHA256"
+    "TLS_AES_128_GCM_SHA256:"
+    "ECDHE-ECDSA-AES256-GCM-SHA384:" #Al menos un suite de TLSv1.2 necesario para que lo acepte, aunque vayamos a usar TLSv1.3
 )
 ssl_context.set_ciphers(cipher_suites)
 
