@@ -30,7 +30,7 @@ server_login.store_new_user("pepe", hash1, connection)
 server_login.store_new_user("pepa", hash2, connection)
 
 cursor.execute("DROP TABLE IF EXISTS messages")
-cursor.execute("CREATE TABLE messages (username VARCHAR(255) NOT NULL PRIMARY KEY , msg_num INT)") #nonce: 32(128 bits/16 bytes)
+cursor.execute("CREATE TABLE messages (username VARCHAR(255), msg_content VARCHAR(255), msg_date TIMESTAMP PRIMARY KEY)") #nonce: 32(128 bits/16 bytes)
 
 #Le damos permisos de lectura, escritura y edición de los datos sobre las tablas
 cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO {};").format(sql.Identifier("server")))

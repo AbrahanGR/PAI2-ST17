@@ -1,8 +1,6 @@
 # serversocket.py
 
 import socket
-import hmac
-import hashlib
 import ssl
 
 import secrets
@@ -19,6 +17,7 @@ PORT = 3030  # Port to listen on (non-privileged ports are > 1023)
 certfile = 'secrets/certs/server_crt.pem'  # Ruta al archivo del certificado SSL
 keyfile = 'secrets/keys/server_key.pem'    # Ruta al archivo de la clave privada
 
+
 # Crear un socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind((HOST, PORT))
@@ -27,6 +26,14 @@ server_socket.listen(1)  # Escuchar una conexión
 # Envolver el socket con SSL
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 ssl_context.load_cert_chain(certfile=certfile, keyfile=keyfile)
+
+ssl_context.minimum_version = ssl.TLSVersion.TLSv1_3 #Seleccionamos la version 1.3 para mayor seguridad
+cipher_suites = (
+    "TLS_AES_256_GCM_SHA384:"
+    "TLS_CHACHA20_POLY1305_SHA256:"
+    "TLS_AES_128_GCM_SHA256"
+)
+ssl_context.set_ciphers(cipher_suites)
 
 CONNECTION = psycopg2.connect(
     host="localhost",
@@ -37,6 +44,9 @@ CONNECTION = psycopg2.connect(
 )
 CONNECTION.autocommit=True
 with ssl_context.wrap_socket(server_socket, server_side=True) as s:
+#with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    #s.bind((HOST, PORT))
+    #s.listen()
     conn, addr = s.accept()
     with conn:
         print(f"Connected by {addr}")
@@ -72,8 +82,7 @@ with ssl_context.wrap_socket(server_socket, server_side=True) as s:
                                 mensaje = datos[1]
                                 #res, mensaje = mensajes.comprueba_credenciales(receptor, cantidad, CONNECTION, nonce)
                                 if mensaje != "":
-                                    mensajes.registra_mensaje(usuario,CONNECTION)
-                                    #print("mensaje recibido: " + mensaje)
+                                    mensajes.registra_mensaje(usuario, mensaje, CONNECTION)
                                     data_server = "Mensaje enviado y recibido correctamente"
                                 else:
                                     data_server = "El mensaje está vacío"

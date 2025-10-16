@@ -17,11 +17,10 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 
-#TODO: quitar estas líneas, añadiendo que confie en nuestros certificados
-ssl_context.check_hostname = False  # No verifica el nombre del host
-ssl_context.verify_mode = ssl.CERT_NONE  # No verifica el certificado del servidor (solo para pruebas)
+ssl_context.load_verify_locations(cafile='secrets/certs/server_crt.pem') #Añadimos el certificado para que confie en el
 
 with ssl_context.wrap_socket(client_socket, server_hostname=HOST) as s:
+#with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
     while True:
         input_user = input("Elige una opción:\n 0: Salir\n 1: Iniciar sesión\n 2: Registrar nuevo usuario\n")
